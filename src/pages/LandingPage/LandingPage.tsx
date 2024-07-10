@@ -3,6 +3,7 @@ import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { ScrollToPlugin } from "gsap/ScrollToPlugin";
 import { useGSAP } from "@gsap/react";
+import { LandingPageWrapper } from "./LandingPage.style";
 
 gsap.registerPlugin(ScrollToPlugin, ScrollTrigger);
 
@@ -23,7 +24,7 @@ const LandingPage: React.FC = () => {
           return;
         }
         let targetElem = document.querySelector(href) as HTMLElement;
-        let y:any = targetElem;
+        let y: any = targetElem;
         if (
           targetElem &&
           panelsContainer?.isSameNode(targetElem.parentElement)
@@ -55,18 +56,39 @@ const LandingPage: React.FC = () => {
         pin: true,
         start: "top top",
         scrub: 1,
-        snap: {
-          snapTo: 1 / (panels.length - 1),
-          inertia: false,
-          duration: { min: 0.1, max: 0.1 },
-        },
+        // snap: {
+        //   snapTo: 1 / (panels.length - 1),
+        //   inertia: false,
+        //   duration: { min: 0.1, max: 0.1 },
+        // },
         end: () => "+=" + (panelsContainer?.offsetWidth - window.innerWidth),
       },
+    });
+    panels.forEach((panel: any, index: number) => {
+      const container = panel.querySelector(".container");
+      const containerWidth = panel?.offsetWidth || 0;
+
+      const containerTimeline = gsap.timeline({
+        scrollTrigger: {
+          trigger: panel, // Pin the entire panel
+          start: () => "+=" + containerWidth * index, // Scroll to the next panel
+          end: () => "+=" + (containerWidth * (index + 1)) / 4, // Scroll to the next panel
+          scrub: 1,
+          markers: true,
+        },
+      });
+
+      containerTimeline
+        .from(container, {
+          y: 300,
+          duration: 1,
+        })
+        .from(container, {});
     });
   });
 
   return (
-    <div>
+    <LandingPageWrapper>
       <div id="page" className="site">
         <div id="feather" className="feather"></div>
         <header id="masthead" className="site-header" role="banner">
@@ -226,7 +248,7 @@ const LandingPage: React.FC = () => {
           <section id="map" className="full-screen gradient-orange"></section>
         </main>
       </div>
-    </div>
+    </LandingPageWrapper>
   );
 };
 
