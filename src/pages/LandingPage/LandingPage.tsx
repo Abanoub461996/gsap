@@ -137,7 +137,6 @@ const LandingPage: React.FC = () => {
               <article id="panel-2" className="panel full-screen bg-red">
                 <div className="container">
                   <div className="">
-                    <img src="" alt="" />
                   </div>
                   <div className="">
                     <h2>Panel 2</h2>
@@ -153,7 +152,6 @@ const LandingPage: React.FC = () => {
                 <div className="container">
                   <div className="">
                     <div className="">
-                      <img src="" alt="" />
                     </div>
                     <div className="">
                       <h2>Panel 3</h2>

@@ -14,7 +14,6 @@ const IntroSection: React.FC = () => {
     <IntroSectionWrapper id="gunText" ref={containerRef}>
       <div className="row">
         <div className="col-6">
-          <img src="" alt="" />
         </div>
         <div className="col-6 d-flex flex-column">
           <h2>Panel 1</h2>
