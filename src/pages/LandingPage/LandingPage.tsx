@@ -1,17 +1,20 @@
-import React, { useEffect } from "react";
+import React from "react";
 import gsap from "gsap";
+import { useGSAP } from "@gsap/react";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { ScrollToPlugin } from "gsap/ScrollToPlugin";
-import { useGSAP } from "@gsap/react";
+
+// COMPONENTS
+import HeroSection from "./HeroSection/HeroSection";
+import IntroSection from "./Panels/Intro/Intro";
+import MorphingShape from "./Footer/FooterSection";
+// STYLE
 import { LandingPageWrapper } from "./LandingPage.style";
 
-gsap.registerPlugin(ScrollToPlugin, ScrollTrigger);
-
 const LandingPage: React.FC = () => {
+  gsap.registerPlugin(ScrollToPlugin, ScrollTrigger);
   useGSAP(() => {
-    /* Main navigation */
-    let panelsSection = document.querySelector("#panels") as HTMLElement,
-      panelsContainer = document.querySelector(
+    let panelsContainer = document.querySelector(
         "#panels-container"
       ) as HTMLElement,
       tween: any;
@@ -46,7 +49,6 @@ const LandingPage: React.FC = () => {
       });
     });
 
-    /* Panels */
     const panels = gsap.utils.toArray("#panels-container .panel");
     tween = gsap.to(panels, {
       xPercent: -100 * (panels.length - 1),
@@ -56,34 +58,44 @@ const LandingPage: React.FC = () => {
         pin: true,
         start: "top top",
         scrub: 1,
-        // snap: {
-        //   snapTo: 1 / (panels.length - 1),
-        //   inertia: false,
-        //   duration: { min: 0.1, max: 0.1 },
-        // },
         end: () => "+=" + (panelsContainer?.offsetWidth - window.innerWidth),
       },
     });
     panels.forEach((panel: any, index: number) => {
       const container = panel.querySelector(".container");
-      const containerWidth = panel?.offsetWidth || 0;
+      const containerWidth = container?.offsetWidth || 0;
+      console.log(containerWidth);
 
       const containerTimeline = gsap.timeline({
         scrollTrigger: {
-          trigger: panel, // Pin the entire panel
-          start: () => "+=" + containerWidth * index, // Scroll to the next panel
-          end: () => "+=" + (containerWidth * (index + 1)) / 4, // Scroll to the next panel
+          trigger: panel,
+          start: () => containerWidth * index,
+          end: () => containerWidth * (index + 1),
           scrub: 1,
-          markers: true,
+          toggleActions: "play reverse",
+          containerAnimation: tween,
         },
       });
 
-      containerTimeline
-        .from(container, {
-          y: 300,
-          duration: 1,
-        })
-        .from(container, {});
+      gsap.set(container, { autoAlpha: 1, scale: 1, z: 0.01 });
+      containerTimeline.to(container, { autoAlpha: 1, scale: 2 });
+
+      gsap.set(".box-1", { y: 100 });
+
+      // red section
+      gsap.to(".box-1", {
+        y: -120,
+        backgroundColor: "#1e90ff",
+        ease: "none",
+        scrollTrigger: {
+          trigger: ".box-1",
+          containerAnimation: tween,
+          start: "center 80%",
+          end: "center 20%",
+          scrub: true,
+          id: "2",
+        },
+      });
     });
   });
 
@@ -94,76 +106,44 @@ const LandingPage: React.FC = () => {
         <header id="masthead" className="site-header" role="banner">
           <nav className="anchor-nav" role="navigation">
             <a href="#intro" className="anchor">
-              Home
+              connectMe
             </a>
             <a href="#panel-1" className="anchor">
               Panel 1
             </a>
+            <a href="#panel-2" className="anchor">
+              Panel 2
+            </a>
             <a href="#panel-3" className="anchor">
               Panel 3
             </a>
-            <a href="#panel-5" className="anchor">
-              Panel 5
-            </a>
-            <a href="#map" className="anchor">
-              Map
+            <a href="#footer" className="anchor">
+              Footer
             </a>
           </nav>
         </header>
         <main id="content" className="site-content" role="main">
-          <section id="intro" className="full-screen pt-5 gradient-orange">
-            <h1>A title</h1>
-            <div id="clouds-layer-1" className="clouds"></div>
-            <div id="clouds-layer-2" className="clouds"></div>
-          </section>
+          <HeroSection />
           <section id="panels">
-            <div id="panels-container" style={{ width: "500%" }}>
+            <div id="panels-container" style={{ width: "300%" }}>
               <article
                 id="panel-1"
                 className="panel full-screen gradient-green"
               >
                 <div className="container">
-                  <div className="row">
-                    <div className="col-6">
-                      <img src="" alt="" />
-                    </div>
-                    <div className="col-6 d-flex flex-column">
-                      <h2>Panel 1</h2>
-                      <p className="step-description">Lorem Ipsum</p>
-                      <div className="panels-navigation text-right">
-                        <div className="nav-panel" data-sign="plus">
-                          <a href="#panel-2" className="anchor">
-                            Next
-                          </a>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
+                  <IntroSection />
                 </div>
               </article>
-              <article id="panel-2" className="panel full-screen gradient-blue">
+              <article id="panel-2" className="panel full-screen bg-red">
                 <div className="container">
-                  <div className="row">
-                    <div className="col-6">
-                      <img src="" alt="" />
-                    </div>
-                    <div className="col-6 d-flex flex-column">
-                      <h2>Panel 2</h2>
-                      <p className="step-description">Lorem Ipsum is</p>
-                      <div className="panels-navigation">
-                        <div className="nav-panel" data-sign="minus">
-                          <a href="#panel-1" className="anchor">
-                            Prev
-                          </a>
-                        </div>
-                        <div className="nav-panel" data-sign="plus">
-                          <a href="#panel-3" className="anchor">
-                            Next
-                          </a>
-                        </div>
-                      </div>
-                    </div>
+                  <div className="">
+                    <img src="" alt="" />
                   </div>
+                  <div className="">
+                    <h2>Panel 2</h2>
+                    <p className="step-description">Lorem Ipsum is</p>
+                  </div>
+                  <div className="box-1"></div>
                 </div>
               </article>
               <article
@@ -171,81 +151,22 @@ const LandingPage: React.FC = () => {
                 className="panel full-screen gradient-green"
               >
                 <div className="container">
-                  <div className="row">
-                    <div className="col-6">
+                  <div className="">
+                    <div className="">
                       <img src="" alt="" />
                     </div>
-                    <div className="col-6 d-flex flex-column">
+                    <div className="">
                       <h2>Panel 3</h2>
                       <p className="step-description">Lorem Ipsum is</p>
-                      <div className="panels-navigation">
-                        <div className="nav-panel" data-sign="minus">
-                          <a href="#panel-2" className="anchor">
-                            Prev
-                          </a>
-                        </div>
-                        <div className="nav-panel" data-sign="plus">
-                          <a href="#panel-4" className="anchor">
-                            Next
-                          </a>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </article>
-              <article id="panel-4" className="panel full-screen gradient-blue">
-                <div className="container">
-                  <div className="row">
-                    <div className="col-6">
-                      <img src="" alt="" />
-                    </div>
-                    <div className="col-6 d-flex flex-column">
-                      <h2>Panel 4</h2>
-                      <p className="step-description">Lorem</p>
-                      <div className="panels-navigation">
-                        <div className="nav-panel" data-sign="minus">
-                          <a href="#panel-3" className="anchor">
-                            Prev
-                          </a>
-                        </div>
-                        <div className="nav-panel" data-sign="plus">
-                          <a href="#panel-5" className="anchor">
-                            Next
-                          </a>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </article>
-              <article
-                id="panel-5"
-                className="panel full-screen gradient-green"
-              >
-                <div className="container">
-                  <div className="row">
-                    <div className="col-6">
-                      <img src="" alt="" />
-                    </div>
-                    <div className="col-6 d-flex flex-column">
-                      <h2>Panel 5</h2>
-                      <p className="step-description">Lorem Ipsum is</p>
-
-                      <div className="panels-navigation text-right">
-                        <div className="nav-panel" data-sign="minus">
-                          <a href="#panel-4" className="anchor">
-                            Prev
-                          </a>
-                        </div>
-                      </div>
                     </div>
                   </div>
                 </div>
               </article>
             </div>
           </section>
-          <section id="map" className="full-screen gradient-orange"></section>
+          <section id="footer">
+            <MorphingShape />
+          </section>
         </main>
       </div>
     </LandingPageWrapper>

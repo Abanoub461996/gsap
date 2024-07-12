@@ -1,30 +1,41 @@
-# React + TypeScript + Vite
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+# ConnectME
 
-Currently, two official plugins are available:
+This is a showcase expressing my skills in ThreeJs and GSAP animation.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Technologies & dependencies.
 
-## Expanding the ESLint configuration
+This is a React Project created using Vite, and it depends mainly on ThreeJs and GSAP libraries applying the animations required.
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+## Run The App.
 
-- Configure the top-level `parserOptions` property like this:
+after getting your version of the code from our github repo, u can run the app for development using `npm run dev`.
 
-```js
-export default {
-  // other rules...
-  parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json'],
-    tsconfigRootDir: __dirname,
-  },
-}
-```
 
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+## App Detailed Discreption.
+
+This App is not by any chance a work of art, as the Design and Content Creation is far away from being my area of expertise and designing animation requires a lot of creativity I never claim to have.
+
+Yet, in this App You will be able to see:
+### 1. GSAP
+#### Horizontal navigation. 
+in the navbar anchors, navigation triggers the horizontal scroll by GSAP.
+
+#### Horizontal Scroll Triggers. 
+scrolling your way in the app, the scroll after the hero Section will be horizontally for 3 sections before it gets back to the verticall scroll again in the footer section.
+
+#### Text Animation in Scroll. 
+Scrolling your way through the application almost all text used in the app will be animated based on the scroll.
+
+### 2. THREEJS
+
+#### Morphing 3D Shapes. 
+in the final seection using ThreeJs and through scrolling the the shape is being morphed from a box shape to a sphere and I allowed the controls to see the 3 dimentions using the mouse click and drag.
+
+
+
+
+## Authors
+
+- [@Abanoub Ragaay](https://github.com/Abanoub461996)
+
