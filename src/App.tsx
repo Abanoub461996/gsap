@@ -1,8 +1,8 @@
+import Anime from "./anime/anime";
 import "./App.css";
-import LandingPage from "./pages/LandingPage/LandingPage";
 
 function App() {
-  return <LandingPage />;
+  return <Anime />;
 }
 
 export default App;

@@ -14,25 +14,27 @@ import { LandingPageWrapper } from "./LandingPage.style";
 const LandingPage: React.FC = () => {
   gsap.registerPlugin(ScrollToPlugin, ScrollTrigger);
   useGSAP(() => {
-    let panelsContainer = document.querySelector(
+    const panelsContainer = document.querySelector(
         "#panels-container"
-      ) as HTMLElement,
-      tween: any;
+      ) as HTMLElement;
+      // eslint-disable-next-line prefer-const, @typescript-eslint/no-explicit-any
+      let tween: any;
     document.querySelectorAll(".anchor").forEach((anchor) => {
       anchor.addEventListener("click", function (e) {
         e.preventDefault();
 
-        let href = (e.target as HTMLElement).getAttribute("href");
+        const href = (e.target as HTMLElement).getAttribute("href");
         if (!href) {
           return;
         }
-        let targetElem = document.querySelector(href) as HTMLElement;
+        const targetElem = document.querySelector(href) as HTMLElement;
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         let y: any = targetElem;
         if (
           targetElem &&
           panelsContainer?.isSameNode(targetElem.parentElement)
         ) {
-          let totalScroll = tween.scrollTrigger.end - tween.scrollTrigger.start,
+          const totalScroll = tween.scrollTrigger.end - tween.scrollTrigger.start,
             totalMovement = (panels.length - 1) * targetElem.offsetWidth;
           y = Math.round(
             tween.scrollTrigger.start +
@@ -61,6 +63,7 @@ const LandingPage: React.FC = () => {
         end: () => "+=" + (panelsContainer?.offsetWidth - window.innerWidth),
       },
     });
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     panels.forEach((panel: any, index: number) => {
       const container = panel.querySelector(".container");
       const containerWidth = container?.offsetWidth || 0;
